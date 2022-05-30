@@ -14,6 +14,8 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -35,6 +37,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.jetpackcompose.ui.theme.JetpackComposeTheme
+import kotlin.random.Random
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -95,6 +98,8 @@ class MainActivity : ComponentActivity() {
                     .background(Color(0xFF00d7ff))
             ) {
 
+                /** ********* **/
+
                 // Image Card
 //                val painter = painterResource(id = R.drawable.logo)
 //                val contentDescription = "Real Madrid Logo"
@@ -111,41 +116,87 @@ class MainActivity : ComponentActivity() {
 //                    )
 //                }
 
+                /** ********* **/
+
                 // Text styling
-                Text(
-                    modifier = Modifier.fillMaxWidth(),
-                    text = buildAnnotatedString {
-                        withStyle(
-                            style = SpanStyle(
-                                color = Color.Gray,
-                                fontSize = 40.sp,
-                                fontStyle = FontStyle.Normal
-                            )
-                        ) {
-                            append("A")
-                        }
-                        append("ndroid ")
-                        withStyle(
-                            style = SpanStyle(
-                                color = Color.Gray,
-                                fontSize = 40.sp,
-                                fontStyle = FontStyle.Normal
-                            )
-                        ) {
-                            append(" D")
-                        }
-                        append("eveloper")
-                    },
-                    color = Color.DarkGray,
-                    fontSize = 30.sp,
-                    fontFamily = fontFamily,
-                    fontWeight = FontWeight.Bold,
-                    fontStyle = FontStyle.Italic,
-                    textAlign = TextAlign.Center,
-                )
+//                Text(
+//                    modifier = Modifier.fillMaxWidth(),
+//                    text = buildAnnotatedString {
+//                        withStyle(
+//                            style = SpanStyle(
+//                                color = Color.Gray,
+//                                fontSize = 40.sp,
+//                                fontStyle = FontStyle.Normal
+//                            )
+//                        ) {
+//                            append("A")
+//                        }
+//                        append("ndroid ")
+//                        withStyle(
+//                            style = SpanStyle(
+//                                color = Color.Gray,
+//                                fontSize = 40.sp,
+//                                fontStyle = FontStyle.Normal
+//                            )
+//                        ) {
+//                            append(" D")
+//                        }
+//                        append("eveloper")
+//                    },
+//                    color = Color.DarkGray,
+//                    fontSize = 30.sp,
+//                    fontFamily = fontFamily,
+//                    fontWeight = FontWeight.Bold,
+//                    fontStyle = FontStyle.Italic,
+//                    textAlign = TextAlign.Center,
+//                )
+
+                /** ********* **/
+
+                // State
+
+                Column(Modifier.fillMaxSize()) {
+                    val color = remember {
+                        mutableStateOf(Color.Yellow)
+                    }
+
+                    ColorBox(
+                        Modifier
+                            .weight(1f)
+                            .fillMaxSize()) {
+                        color.value = it
+                    }
+
+                    Box(
+                        modifier = Modifier
+                            .background(color = color.value)
+                            .weight(1f)
+                            .fillMaxSize()
+                    )
+                }
+
             }
         }
     }
+}
+
+@Composable
+fun ColorBox(
+    modifier: Modifier = Modifier,
+    updateColor: (Color) -> Unit
+) {
+    Box(
+        modifier = modifier
+            .background(Color.Gray)
+            .clickable {
+                updateColor(Color(
+                    Random.nextFloat(),
+                    Random.nextFloat(),
+                    Random.nextFloat(),
+                    1f
+                ))
+            }
+    )
 }
 
 @Composable
