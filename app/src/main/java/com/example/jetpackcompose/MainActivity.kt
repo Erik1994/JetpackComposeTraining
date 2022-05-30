@@ -21,7 +21,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -44,7 +53,6 @@ class MainActivity : ComponentActivity() {
 //                Text(text = "Erik")
 //                Text(text = "Hello")
 //            }
-
 
 
 //            Column(
@@ -70,15 +78,71 @@ class MainActivity : ComponentActivity() {
 //                Text(text = "World!!!")
 //            }
 
+            val fontFamily = FontFamily(
+                Font(R.font.lexend_light, FontWeight.Light),
+                Font(R.font.lexend_black, FontWeight.Black),
+                Font(R.font.lexend_extrabold, FontWeight.ExtraBold),
+                Font(R.font.lexend_extralight, FontWeight.ExtraLight),
+                Font(R.font.lexend_medium, FontWeight.Medium),
+                Font(R.font.lexend_regular, FontWeight.Normal),
+                Font(R.font.lexend_semibold, FontWeight.SemiBold),
+                Font(R.font.lexend_bold, FontWeight.Bold)
+            )
 
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color(0xFF00d7ff))
+            ) {
 
-            val painter = painterResource(id = R.drawable.logo)
-            val contentDescription = "Real Madrid Logo"
-            val title = "Real Madrid is Champion"
-            Box(modifier = Modifier
-                .fillMaxWidth(0.5f)
-                .padding(5.dp)){
-                ImageCard(painter = painter, contentDescription = contentDescription, title = title)
+                // Image Card
+//                val painter = painterResource(id = R.drawable.logo)
+//                val contentDescription = "Real Madrid Logo"
+//                val title = "Real Madrid is Champion"
+//                Box(
+//                    modifier = Modifier
+//                        .fillMaxWidth(0.5f)
+//                        .padding(5.dp)
+//                ) {
+//                    ImageCard(
+//                        painter = painter,
+//                        contentDescription = contentDescription,
+//                        title = title
+//                    )
+//                }
+
+                // Text styling
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = buildAnnotatedString {
+                        withStyle(
+                            style = SpanStyle(
+                                color = Color.Gray,
+                                fontSize = 40.sp,
+                                fontStyle = FontStyle.Normal
+                            )
+                        ) {
+                            append("A")
+                        }
+                        append("ndroid ")
+                        withStyle(
+                            style = SpanStyle(
+                                color = Color.Gray,
+                                fontSize = 40.sp,
+                                fontStyle = FontStyle.Normal
+                            )
+                        ) {
+                            append(" D")
+                        }
+                        append("eveloper")
+                    },
+                    color = Color.DarkGray,
+                    fontSize = 30.sp,
+                    fontFamily = fontFamily,
+                    fontWeight = FontWeight.Bold,
+                    fontStyle = FontStyle.Italic,
+                    textAlign = TextAlign.Center,
+                )
             }
         }
     }
@@ -102,7 +166,7 @@ fun ImageCard(
                 contentDescription = contentDescription,
                 contentScale = ContentScale.Crop
             )
-            
+
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -125,7 +189,7 @@ fun ImageCard(
             ) {
                 Text(
                     text = title,
-                    style = TextStyle(color = Color.Blue, fontSize = 16.sp)
+                    style = TextStyle(color = Color.White, fontSize = 16.sp)
                 )
             }
         }
